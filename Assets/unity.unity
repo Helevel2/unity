@@ -236,10 +236,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6aae6a7ed9b9acb449c07c3f8089e4de, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  num: 0
-  szam: 
-  exponent: 0
-  "eredm\xE9ny": 0
+  num: 3
+  szam: "P\xE1ratlan"
+  exponent: 2
+  eredmeny: 9
+  a: 
+  b: 
+  c: 
+  fuz: ',,'
 --- !u!4 &465802619
 Transform:
   m_ObjectHideFlags: 0
