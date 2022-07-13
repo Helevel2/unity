@@ -9,6 +9,7 @@ public class linearmovement : MonoBehaviour
     [SerializeField] KeyCode downKey;
     [SerializeField] KeyCode rightKey;
     [SerializeField] KeyCode leftKey;
+    [SerializeField] float rotationSpeed;
     void Update()
     {
         bool up = Input.GetKey(upKey);
@@ -24,6 +25,18 @@ public class linearmovement : MonoBehaviour
 
 
         transform.position += velocity.normalized * speed * Time.deltaTime;
+
+
+
+
+        if (velocity != Vector3.zero)
+        {
+            Quaternion targetRotation = Quaternion.LookRotation(velocity);
+            transform.rotation = Quaternion.RotateTowards(
+                transform.rotation,
+                targetRotation,
+                rotationSpeed * Time.deltaTime);
+        }
     }
 
     float ToAxis(bool positive, bool negative)
