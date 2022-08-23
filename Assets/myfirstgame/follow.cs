@@ -1,10 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class follow : MonoBehaviour
 {
-    [SerializeField] Transform positionToFollow;
+    [SerializeField] List<Transform> followables;
     // [SerializeField] float speed;
     [SerializeField] AnimationCurve speedOverDistance;
     [SerializeField, Range(0, 10)] float startStamina;
@@ -42,18 +43,23 @@ public class follow : MonoBehaviour
 
     private void Move()
     {
-        float distance = Vector3.Distance(positionToFollow.position, transform.position);
+        if (followables == null || followables.Count == 0)
+            return;
+        Transform followable = TransformHelper.FindClosest(followables, transform);
+        if (followable == null)
+            return;
+        float distance = Vector3.Distance(followable.position, transform.position);
         float speed = speedOverDistance.Evaluate(distance);
 
         Vector3 startPos = transform.position;
         transform.position = Vector3.MoveTowards(
                         transform.position,
-                        positionToFollow.position,
+                        followable.position,
                         speed * Time.deltaTime);
         Vector3 endPos = transform.position;
 
         float step = (endPos - startPos).magnitude;
-        Vector3 vectorToTarget = positionToFollow.position - transform.position;
+        Vector3 vectorToTarget = followable.position - transform.position;
         transform.rotation = Quaternion.LookRotation(vectorToTarget);
 
         stamina -= step;

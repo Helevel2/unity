@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class linearmovement : MonoBehaviour
+public class PlayerMover : MonoBehaviour
 {
     [SerializeField] float speed;
     [SerializeField] KeyCode upKey;
@@ -10,7 +10,24 @@ public class linearmovement : MonoBehaviour
     [SerializeField] KeyCode rightKey;
     [SerializeField] KeyCode leftKey;
     [SerializeField] float rotationSpeed;
+    [SerializeField] Damageable damageable;
+
+    void OnValidate()
+    {
+        if (damageable==null)
+        {
+            damageable = GetComponent<Damageable>();
+        }
+    }
     void Update()
+    {
+        if (damageable != null && damageable.hp <= 0)
+            return;
+        Vector3 velocity = GetInputVector();
+        Move(velocity);
+    }
+
+    private Vector3 GetInputVector()
     {
         bool up = Input.GetKey(upKey);
         bool down = Input.GetKey(downKey);
@@ -19,11 +36,13 @@ public class linearmovement : MonoBehaviour
         float x = ToAxis(right, left);
         float z = ToAxis(up, down);
 
-        
 
         Vector3 velocity = new Vector3(x, 0, z);
+        return velocity;
+    }
 
-
+    private void Move(Vector3 velocity)
+    {
         transform.position += velocity.normalized * speed * Time.deltaTime;
 
 

@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
 public class Circling : MonoBehaviour
 {
     [SerializeField] Transform center;
@@ -14,7 +15,7 @@ public class Circling : MonoBehaviour
     }
     void Update()
     {
-        v = Quaternion.AngleAxis(degreesPerSecond * Time.deltaTime, Vector3.forward) * v;
+        v = Quaternion.AngleAxis(degreesPerSecond * Time.deltaTime, Vector3.down) * v;
         transform.position = center.position + v;
     }
 }

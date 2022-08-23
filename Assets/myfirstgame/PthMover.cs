@@ -8,10 +8,26 @@ public class PthMover : MonoBehaviour
     [SerializeField] Transform p2;
     [SerializeField] float speed;
 
+    bool directionPositive;
+
     void Update()
     {
-        Vector3 velocity = (p2.position - p1.position).normalized;
-        transform.position += speed * Time.deltaTime * velocity;
+        Vector3 target = directionPositive ? p2.position : p1.position;
+
+        
+
+        Vector3 directionVector = (target-transform.position);
+        float distance = directionVector.magnitude;
+        Vector3 velocity = directionVector.normalized;
+        float stepLength = Time.deltaTime * speed;
+        Vector3 displacement = velocity *stepLength;
+        
+        transform.position += displacement;
+
+        if (distance<=stepLength)
+        {
+            directionPositive = !directionPositive;
+        }
     }
 
     void OnDrawGizmos()
