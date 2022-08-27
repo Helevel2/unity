@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerMoverfizik : MonoBehaviour
+public class PlayerMover : MonoBehaviour
 {
     [SerializeField] float speed;
     [SerializeField] KeyCode upKey;
@@ -11,18 +11,12 @@ public class PlayerMoverfizik : MonoBehaviour
     [SerializeField] KeyCode leftKey;
     [SerializeField] float rotationSpeed;
     [SerializeField] Damageable damageable;
-    [SerializeField] Rigidbody rigidBody;
 
     void OnValidate()
     {
         if (damageable==null)
         {
             damageable = GetComponent<Damageable>();
-        }
-
-        if (rigidBody == null)
-        {
-            rigidBody = GetComponent<Rigidbody>();
         }
     }
     void Update()
@@ -33,7 +27,7 @@ public class PlayerMoverfizik : MonoBehaviour
         Move(velocity);
     }
 
-    private Vector3 GetInputVector()
+    Vector3 GetInputVector()
     {
         bool up = Input.GetKey(upKey);
         bool down = Input.GetKey(downKey);
@@ -47,10 +41,10 @@ public class PlayerMoverfizik : MonoBehaviour
         return velocity;
     }
 
-    private void Move(Vector3 velocity)
+    void Move(Vector3 velocity)
     {
-        //transform.position += velocity.normalized * speed * Time.deltaTime;
-        rigidBody.velocity = velocity.normalized * speed;
+        transform.position += velocity.normalized * speed * Time.deltaTime;
+
 
 
 
